@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private int playerOneScore, playerTwoScore;
     private boolean playerOneTurn = true;
     private String currWord;
+    private final String PLAYER1 = "Player 1";
+    private final String PLAYER2 = "Player 2";
     private CountDownTimer turnTimer;
 
     @Override
@@ -27,17 +29,20 @@ public class MainActivity extends AppCompatActivity {
                 "google","hire","us","please","","","","",""));
         playerOneScore = 0;
         playerTwoScore = 0;
-        turnTimer =  new CountDownTimer(30000, 1000) {
-
+        turnTimer =  new CountDownTimer(60000, 1000) {
+            TextView timeLabel = (TextView) findViewById(R.id.timer);
             public void onTick(long millisUntilFinished) {
-              //  mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+              timeLabel.setText("" + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
                 changeTurn();
-               // mTextField.setText("done!");
             }
         };
+    }
+
+    private  void startTurn(View view){
+        turnTimer.start();
     }
 
     private void displayNextWord(){
@@ -80,20 +85,23 @@ public class MainActivity extends AppCompatActivity {
     private  void changeTurn(){
         playerOneTurn = playerOneTurn ? false : true;
         Integer score = playerOneTurn ? playerOneScore : playerTwoScore;
-        TextView scoreLabel = (TextView) findViewById(R.id.score);
-        scoreLabel.setText(score.toString());
+        String player = playerOneTurn ? PLAYER1 : PLAYER2;
 
+        TextView scoreLabel = (TextView) findViewById(R.id.score);
+        TextView playerLabel = (TextView) findViewById(R.id.score);
+        scoreLabel.setText(score.toString());
+        playerLabel.setText(player);
     }
 
     private void resetTimer(){
         turnTimer =  new CountDownTimer(30000, 1000) {
+            TextView timeLabel = (TextView) findViewById(R.id.timer);
             public void onTick(long millisUntilFinished) {
-                // mTextField.setText("" + millisUntilFinished / 1000);
+                timeLabel.setText("" + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
                 changeTurn();
-                // mTextField.setText("done!");
             }
         };
     }
