@@ -25,10 +25,10 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="wrong"
+        android:text="skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/wrong"
+        android:id="@+id/Skip"
         android:textColor="@android:color/holo_red_dark"
         android:layout_alignBaseline="@+id/correct"
         android:layout_alignBottom="@+id/correct"
@@ -51,26 +51,10 @@
         android:text="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/correctScore"
+        android:id="@+id/score"
         android:textSize="24sp"
         android:layout_alignBaseline="@+id/correct"
         android:layout_alignBottom="@+id/correct"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="43dp"
-        android:layout_marginStart="43dp" />
-
-    <TextView
-        android:text="0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/wrongScore"
-        android:textSize="24sp"
-        android:layout_alignBaseline="@+id/wrong"
-        android:layout_alignBottom="@+id/wrong"
-        android:layout_toRightOf="@+id/wrong"
-        android:layout_toEndOf="@+id/wrong"
-        android:layout_marginLeft="46dp"
-        android:layout_marginStart="46dp" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
