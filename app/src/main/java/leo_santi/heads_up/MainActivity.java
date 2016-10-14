@@ -1,5 +1,6 @@
 package leo_santi.heads_up;
 
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private int playerOneScore, playerTwoScore;
     private boolean playerOneTurn = true;
     private String currWord;
+    private CountDownTimer turnTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,17 @@ public class MainActivity extends AppCompatActivity {
                 "google","hire","us","please","","","","",""));
         playerOneScore = 0;
         playerTwoScore = 0;
+        turnTimer =  new CountDownTimer(30000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+              //  mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                changeTurn();
+               // mTextField.setText("done!");
+            }
+        };
     }
 
     private void displayNextWord(){
@@ -53,5 +66,26 @@ public class MainActivity extends AppCompatActivity {
         TextView displayWord = (TextView) findViewById(R.id.word);
         currWord = words.poll();
         displayWord.setText(currWord);
+    }
+
+    private  void changeTurn(){
+        playerOneTurn = playerOneTurn ? false : true;
+        Integer score = playerOneTurn ? playerOneScore : playerTwoScore;
+        TextView scoreLabel = (TextView) findViewById(R.id.score);
+        scoreLabel.setText(score.toString());
+
+    }
+
+    private void resetTimer(){
+        turnTimer =  new CountDownTimer(30000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // mTextField.setText("" + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                changeTurn();
+                // mTextField.setText("done!");
+            }
+        };
     }
 }
