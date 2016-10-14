@@ -10,20 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="leo_santi.heads_up.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="61dp"
-        android:id="@+id/word"
-        android:text="EXAMPLE TEXT"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:typeface="normal"
-        android:textSize="56sp"
-        android:textStyle="normal|bold"
-        android:textAllCaps="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:text="skip"
         android:layout_width="wrap_content"
@@ -33,6 +19,7 @@
         android:layout_alignBaseline="@+id/correct"
         android:layout_alignBottom="@+id/correct"
         android:layout_alignRight="@+id/word"
+        android:onClick="playerSkip"
         android:layout_alignEnd="@+id/word" />
 
     <Button
@@ -45,6 +32,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/word"
         android:layout_alignStart="@+id/word"
+        android:onClick="playerCorrect"
         android:layout_marginBottom="52dp" />
 
     <TextView
@@ -55,6 +43,20 @@
         android:textSize="24sp"
         android:layout_alignBaseline="@+id/correct"
         android:layout_alignBottom="@+id/correct"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="500dp"
+        android:layout_height="100dp"
+        android:id="@+id/word"
+        android:text="EXAMPLE TEXT"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:typeface="normal"
+        android:textSize="66sp"
+        android:textStyle="normal|bold"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -2,7 +2,10 @@ package leo_santi.heads_up;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Button;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -34,21 +37,27 @@ public class MainActivity extends AppCompatActivity {
             wordLabel.setText("Out of Words");
     }
 
-    private void playerCorrect(){
+    public void playerCorrect(View v){
+        Log.d("playerCorrect", "Very start");
         TextView scoreLabel = (TextView) findViewById(R.id.score);
         Integer score = playerOneTurn ? playerOneScore : playerTwoScore;
+        Log.d("playerCorrect", "Score set");
 
         score++;
-        scoreLabel.setText(score);
-        displayNextWord();
+        Log.d("playerCorrect", "Score++");
+        scoreLabel.setText(score.toString());
+        Log.d("playerCorrect", "Display score");
 
         if (playerOneTurn)
             playerOneScore = score;
         else
             playerTwoScore = score;
+
+        displayNextWord();
+
     }
 
-    private void playerSkip() {
+    public void playerSkip(View v) {
         words.offer(currWord);
         TextView displayWord = (TextView) findViewById(R.id.word);
         currWord = words.poll();
