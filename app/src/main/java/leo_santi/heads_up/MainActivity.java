@@ -10,8 +10,7 @@ import java.util.Queue;
 
 public class MainActivity extends AppCompatActivity {
     private Queue<String> words;
-    private int playerOneScore;
-    private int playerTwoScore;
+    private int playerOneScore, playerTwoScore;
     private boolean playerOneTurn = true;
 
     @Override
@@ -19,13 +18,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         words = new LinkedList<String>(Arrays.asList("cat","dog","cow","Donald Trump",
-                "","","","","","","","",""));
+                "google","hire","us","please","","","","",""));
         playerOneScore = 0;
         playerTwoScore = 0;
     }
 
     private void playerCorrect(){
-        TextView label = (TextView) findViewById(R.id.correctScore);
+        TextView label = (TextView) findViewById(R.id.score);
         Integer score = playerOneTurn ? playerOneScore : playerTwoScore;
 
         score++;
@@ -38,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
             playerTwoScore = score;
     }
 
-    private void playerSkip(){
-
+    private void playerSkip() {
+        words.offer(currWord);
+        TextView displayWord = (TextView) findViewById(R.id.word);
+        currWord = words.poll();
+        displayWord.setText(currWord);
     }
 }
