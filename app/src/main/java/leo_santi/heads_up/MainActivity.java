@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private Queue<String> words;
     private int playerOneScore, playerTwoScore;
     private boolean playerOneTurn = true;
+    private String currWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +24,23 @@ public class MainActivity extends AppCompatActivity {
         playerTwoScore = 0;
     }
 
+    private void displayNextWord(){
+        TextView wordLabel = (TextView) findViewById(R.id.word);
+
+        if (words.peek() != null) {
+            currWord = words.poll();
+            wordLabel.setText(currWord);
+        } else
+            wordLabel.setText("Out of Words");
+    }
+
     private void playerCorrect(){
-        TextView label = (TextView) findViewById(R.id.score);
+        TextView scoreLabel = (TextView) findViewById(R.id.score);
         Integer score = playerOneTurn ? playerOneScore : playerTwoScore;
 
         score++;
-        label.setText(score);
-
+        scoreLabel.setText(score);
+        displayNextWord();
 
         if (playerOneTurn)
             playerOneScore = score;
