@@ -36,16 +36,6 @@
         android:layout_marginBottom="52dp" />
 
     <TextView
-        android:text="0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/score"
-        android:textSize="24sp"
-        android:layout_alignBaseline="@+id/correct"
-        android:layout_alignBottom="@+id/correct"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
         android:layout_width="500dp"
         android:layout_height="100dp"
         android:id="@+id/word"
@@ -58,5 +48,40 @@
         android:textAlignment="center"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="0:00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timer"
+        android:textSize="36sp"
+        android:layout_below="@+id/word"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/score"
+        android:textSize="24sp"
+        android:layout_alignBaseline="@+id/Skip"
+        android:layout_alignBottom="@+id/Skip"
+        android:layout_toRightOf="@+id/timer"
+        android:layout_toEndOf="@+id/timer"
+        android:layout_marginLeft="27dp"
+        android:layout_marginStart="27dp" />
+
+    <TextView
+        android:text="Player Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/playerName"
+        android:textSize="24sp"
+        android:layout_alignBaseline="@+id/correct"
+        android:layout_alignBottom="@+id/correct"
+        android:layout_alignRight="@+id/timer"
+        android:layout_alignEnd="@+id/timer"
+        android:layout_marginRight="28dp"
+        android:layout_marginEnd="28dp" />
 
 </RelativeLayout>
