@@ -15,7 +15,7 @@ import java.util.Queue;
 public class MainActivity extends AppCompatActivity {
     private Queue<String> words;
     private int playerOneScore, playerTwoScore;
-    private boolean isPlayerOneTurn = true, isActiveTurn = false;
+    private boolean isPlayerOneTurn = true, isActiveTurn = false, isStop = false;
     private String currWord;
     private final String PLAYER_1 = "Player 1";
     private final String PLAYER_2 = "Player 2";
@@ -26,19 +26,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTurnTimer(30);
+        setTurnTimer(5);
         setDefaultGame();
     }
 
     private void setTurnTimer(int s) { // seconds
         turnTimer =  new CountDownTimer((s * 1000), 1000) {
                 TextView timerLabel = (TextView) findViewById(R.id.timer);
+                Button startButton = (Button) findViewById(R.id.start);
+
                 public void onTick(long millisUntilFinished) {
                     timerLabel.setText("" + millisUntilFinished / 1000 + " seconds");
+                    if (!isStop){
+                        startButton.setText("STOP");
+                        isStop = true;
+                    }
                 }
+
                 public void onFinish() {
                     timerLabel.setText("OUT OF TIME!");
                     isActiveTurn = false;
+                    isStop = false;
+                    startButton.setText("START");
                     changeTurn();
                 }
             };
@@ -53,13 +62,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTurn(View v) {
+        Button startButton = (Button) findViewById(R.id.start);
+
         if (!isActiveTurn) {
-            isActiveTurn = true;
-            displayNewWord();
-            turnTimer.start();
+            if (isStop) {
+                startButton.setText("RESET");
+                isStop = false;
+                isActiveTurn = true;
+            } else {
+                isActiveTurn = true;
+                displayNewWord();
+                turnTimer.start();
+            }
         } else {
-            setDefaultGame();
             isActiveTurn = false;
+            startButton.setText("STOP");
+            isStop = true;
+
         }
     }
 
