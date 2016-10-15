@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDefaultGame() {
-        words = new LinkedList<>(Arrays.asList("cat","dog","cow", "jabberwocky", "chicken", "google", "please", "hire","us"));
+        words = new LinkedList<>(Arrays.asList("cat", "dog", "cow", "jabberwocky", "chicken", "google", "please", "hire", "us"));
+        words = new LinkedList<String>();
         currWord = words.peek();
         playerOneScore = 0;
         playerTwoScore = 0;
@@ -104,12 +105,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void displayNewWord() {
-        if (words.peek() != null) {
+        if ((currWord != null) && (words.peek() != null)) {
             currWord = words.poll();
             displayWord(currWord);
         } else {
             displayWord("Out of words!");
             isActiveTurn = false;
+            // turnTimer.cancel();
         }
     }
 
