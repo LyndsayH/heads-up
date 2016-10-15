@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             isActiveTurn = false;
             startButton.setText("STOP");
             isStop = true;
-
         }
     }
 
