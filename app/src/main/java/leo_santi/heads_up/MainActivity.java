@@ -35,12 +35,10 @@ public class MainActivity extends AppCompatActivity {
                 TextView timerLabel = (TextView) findViewById(R.id.timer);
                 Button startButton = (Button) findViewById(R.id.start);
 
+
                 public void onTick(long millisUntilFinished) {
                     timerLabel.setText("" + millisUntilFinished / 1000 + " seconds");
-                    if (!isStop){
-                        startButton.setText("STOP");
-                        isStop = true;
-                    }
+
                 }
 
                 public void onFinish() {
@@ -73,12 +71,12 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 isActiveTurn = true;
                 displayNewWord();
+                startButton.setText("STOP");
+                isStop = true;
                 turnTimer.start();
             }
         } else {
             isActiveTurn = false;
-            startButton.setText("STOP");
-            isStop = true;
         }
     }
 
