@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDefaultGame() {
-        words = new LinkedList<>(Arrays.asList("cat","dog","cow", "jabberwocky" "chicken", "google", "please", "hire","us"));
+        words = new LinkedList<>(Arrays.asList("cat","dog","cow", "jabberwocky", "chicken", "google", "please", "hire","us"));
         currWord = words.peek();
         playerOneScore = 0;
         playerTwoScore = 0;
