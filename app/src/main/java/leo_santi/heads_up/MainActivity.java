@@ -15,7 +15,7 @@ import java.util.Queue;
 public class MainActivity extends AppCompatActivity {
     private Queue<String> words;
     private int playerOneScore, playerTwoScore;
-    private boolean isPlayerOneTurn = true, activeTurn = false;
+    private boolean isPlayerOneTurn = true, isActiveTurn = false;
     private String currWord;
     private final String PLAYER_1 = "Player 1";
     private final String PLAYER_2 = "Player 2";
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 public void onFinish() {
                     timerLabel.setText("OUT OF TIME!");
-                    activeTurn = false;
+                    isActiveTurn = false;
                     changeTurn();
                 }
             };
@@ -53,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTurn(View v) {
-        if (!activeTurn) {
-            activeTurn = true;
+        if (!isActiveTurn) {
+            isActiveTurn = true;
             displayNewWord();
             turnTimer.start();
         } else {
             setDefaultGame();
-            activeTurn = false;
+            isActiveTurn = false;
         }
     }
 
@@ -91,12 +91,12 @@ public class MainActivity extends AppCompatActivity {
             displayWord(currWord);
         } else {
             displayWord("Out of words!");
-            activeTurn = false;
+            isActiveTurn = false;
         }
     }
 
     public void playerCorrect(View v) {
-        if (activeTurn) {
+        if (isActiveTurn) {
             TextView scoreLabel = (TextView) findViewById(R.id.score);
             Integer score = isPlayerOneTurn ? playerOneScore : playerTwoScore;
 
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playerSkip(View v) {
-        if (activeTurn) {
+        if (isActiveTurn) {
             skipWord();
             displayWord(currWord);
         }
