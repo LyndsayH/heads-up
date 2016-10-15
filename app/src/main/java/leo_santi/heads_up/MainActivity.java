@@ -1,11 +1,11 @@
 package leo_santi.heads_up;
 
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
+import android.os.CountDownTimer;
 import android.util.Log;
 
 import java.util.Arrays;
@@ -15,94 +15,117 @@ import java.util.Queue;
 public class MainActivity extends AppCompatActivity {
     private Queue<String> words;
     private int playerOneScore, playerTwoScore;
-    private boolean playerOneTurn = true;
+    private boolean isPlayerOneTurn = true, activeTurn = false;
     private String currWord;
-    private final String PLAYER1 = "Player 1";
-    private final String PLAYER2 = "Player 2";
+    private final String PLAYER_1 = "Player 1";
+    private final String PLAYER_2 = "Player 2";
     private CountDownTimer turnTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        words = new LinkedList<String>(Arrays.asList("cat","dog","cow","Donald Trump",
-                "google","hire","us","please","","","","",""));
+
+        setTurnTimer(30);
+        setDefaultGame();
+    }
+
+    private void setTurnTimer(int s) { // seconds
+        turnTimer =  new CountDownTimer((s * 1000), 1000) {
+                TextView timerLabel = (TextView) findViewById(R.id.timer);
+                public void onTick(long millisUntilFinished) {
+                    timerLabel.setText("" + millisUntilFinished / 1000 + " seconds");
+                }
+                public void onFinish() {
+                    timerLabel.setText("OUT OF TIME!");
+                    activeTurn = false;
+                    changeTurn();
+                }
+            };
+    }
+
+    private void setDefaultGame() {
+        words = new LinkedList<>(Arrays.asList("cat","dog","cow", "jabberwocky" "chicken", "google", "please", "hire","us"));
+        currWord = words.peek();
         playerOneScore = 0;
         playerTwoScore = 0;
-        turnTimer =  new CountDownTimer(60000, 1000) {
-            TextView timeLabel = (TextView) findViewById(R.id.timer);
-            public void onTick(long millisUntilFinished) {
-              timeLabel.setText("" + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-                changeTurn();
-            }
-        };
+        resetTimer();
     }
 
-    private  void startTurn(View view){
-        turnTimer.start();
+    public void startTurn(View v) {
+        if (!activeTurn) {
+            activeTurn = true;
+            displayNewWord();
+            turnTimer.start();
+        } else {
+            setDefaultGame();
+            activeTurn = false;
+        }
     }
 
-    private void displayNextWord(){
-        TextView wordLabel = (TextView) findViewById(R.id.word);
-
-        if (words.peek() != null) {
-            currWord = words.poll();
-            wordLabel.setText(currWord);
-        } else
-            wordLabel.setText("Out of Words");
+    private void resetTimer() {
+        turnTimer.cancel();
     }
 
-    public void playerCorrect(View v){
-        Log.d("playerCorrect", "Very start");
-        TextView scoreLabel = (TextView) findViewById(R.id.score);
-        Integer score = playerOneTurn ? playerOneScore : playerTwoScore;
-        Log.d("playerCorrect", "Score set");
 
-        score++;
-        Log.d("playerCorrect", "Score++");
-        scoreLabel.setText(score.toString());
-        Log.d("playerCorrect", "Display score");
-
-        if (playerOneTurn)
-            playerOneScore = score;
-        else
-            playerTwoScore = score;
-
-        displayNextWord();
-
-    }
-
-    public void playerSkip(View v) {
-        words.offer(currWord);
-        TextView displayWord = (TextView) findViewById(R.id.word);
-        currWord = words.poll();
-        displayWord.setText(currWord);
-    }
-
-    private  void changeTurn(){
-        playerOneTurn = playerOneTurn ? false : true;
-        Integer score = playerOneTurn ? playerOneScore : playerTwoScore;
-        String player = playerOneTurn ? PLAYER1 : PLAYER2;
+    private void changeTurn() {
+        isPlayerOneTurn = isPlayerOneTurn ? false : true;
+        Integer score = isPlayerOneTurn ? playerOneScore : playerTwoScore;
+        String player = isPlayerOneTurn ? PLAYER_1 : PLAYER_2;
 
         TextView scoreLabel = (TextView) findViewById(R.id.score);
-        TextView playerLabel = (TextView) findViewById(R.id.score);
-        scoreLabel.setText(score.toString());
+        TextView playerLabel = (TextView) findViewById(R.id.playerName);
+        scoreLabel.setText("Score: " + score.toString());
         playerLabel.setText(player);
     }
 
-    private void resetTimer(){
-        turnTimer =  new CountDownTimer(30000, 1000) {
-            TextView timeLabel = (TextView) findViewById(R.id.timer);
-            public void onTick(long millisUntilFinished) {
-                timeLabel.setText("" + millisUntilFinished / 1000);
-            }
 
-            public void onFinish() {
-                changeTurn();
-            }
-        };
+    private void displayWord(String word) {
+        TextView wordLabel = (TextView) findViewById(R.id.word);
+        wordLabel.setText(word);
+
+    }
+    private void displayNewWord() {
+        if (words.peek() != null) {
+            currWord = words.poll();
+            displayWord(currWord);
+        } else {
+            displayWord("Out of words!");
+            activeTurn = false;
+        }
+    }
+
+    public void playerCorrect(View v) {
+        if (activeTurn) {
+            TextView scoreLabel = (TextView) findViewById(R.id.score);
+            Integer score = isPlayerOneTurn ? playerOneScore : playerTwoScore;
+
+            score++;
+            scoreLabel.setText("Score: " + score.toString());
+
+            if (isPlayerOneTurn)
+                playerOneScore = score;
+            else
+                playerTwoScore = score;
+
+            displayNewWord();
+        }
+    }
+
+/**
+ * Skip a word i.e. don't use it now, but save it for later.
+ * Put word at the front of the queue at the end.
+ *
+ */
+    private void skipWord() {
+        words.offer(currWord);
+        currWord = words.poll();
+    }
+
+    public void playerSkip(View v) {
+        if (activeTurn) {
+            skipWord();
+            displayWord(currWord);
+        }
     }
 }
